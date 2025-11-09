@@ -1,0 +1,261 @@
+# Spring Boot / Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# STS (Spring Tool Suite)
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# IntelliJ IDEA
+.idea
+*.iws
+*.iml
+*.ipr
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+logs/
+*.log
+log/
+*.log.*
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Backup files
+*.backup
+*.bak
+*.orig
+*.BACKUP
+*.BASE
+*.LOCAL
+*.REMOTE
+
+# =============================================================================
+# SECURITY & SENSITIVE DATA
+# =============================================================================
+
+# API Keys and Secrets
+*.key
+*.pem
+*.p12
+*.jks
+keystore.*
+truststore.*
+
+# Environment files
+.env
+.env.*
+!.env.example
+*.env.local
+*.env.production
+*.env.development
+
+# Application properties with secrets
+application-local.properties
+application-secrets.properties
+application-*.properties
+!application.properties
+!application-dev.properties
+!application-prod.properties
+
+# Configuration files that may contain credentials
+config/secrets/
+config/local/
+**/secrets/**
+**/credentials/**
+
+# SSH keys
+id_rsa
+id_rsa.pub
+id_dsa
+id_dsa.pub
+id_ecdsa
+id_ecdsa.pub
+id_ed25519
+id_ed25519.pub
+*.ppk
+
+# AWS credentials
+.aws/
+aws-credentials
+credentials.csv
+
+# Azure credentials
+.azure/
+azureProfile.json
+
+# GCP credentials
+*.json
+!pom.json
+!package.json
+!tsconfig.json
+!**/src/**/*.json
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Certificate files
+*.crt
+*.cer
+*.der
+
+# OAuth tokens
+.oauth/
+oauth.json
+token.json
+refresh_token.json
+
+# Personal/private configurations
+application-personal.properties
+*-personal.*
+*-private.*
+
+# MCP Server configurations (if they contain credentials)
+# Note: osquery-mcp-server.py is kept but should not contain hardcoded secrets
+mcp-config-local.json
+mcp-credentials.json
+
+# =============================================================================
+# BUILD & DEPENDENCIES
+# =============================================================================
+
+# Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle
+**/build/
+!src/**/build/
+
+# =============================================================================
+# TESTING
+# =============================================================================
+
+# Test results
+test-output/
+test-results/
+*.result
+coverage/
+.coverage
+htmlcov/
+*.cover
+
+# =============================================================================
+# DOCUMENTATION (generated)
+# =============================================================================
+
+# Keep manually written docs, ignore generated ones
+target/site/
+target/apidocs/
+
+# =============================================================================
+# OS & EDITOR SPECIFIC
+# =============================================================================
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# JetBrains IDEs
+out/
+.idea_modules/
+atlassian-ide-plugin.xml
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# Eclipse
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.recommenders
+
+# =============================================================================
+# ARCHIVES & BACKUPS
+# =============================================================================
+
+# Compressed files (unless specifically needed)
+*.tar.gz
+*.zip
+*.jar
+!**/mvnw.jar
+*.war
+*.ear
+*.nar
+
+# Backup archives
+*_backup_*.tar.gz
+*_backup_*.zip
+backup_*/
+
+# =============================================================================
+# APPLICATION SPECIFIC
+# =============================================================================
+
+# Application data
+data/
+*.data
+
+# Cache directories
+.cache/
+cache/
+tmp/
+
+# PID files
+*.pid
+
+# Node modules (if using npm for any frontend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

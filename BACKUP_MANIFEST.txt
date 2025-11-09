@@ -1,0 +1,119 @@
+=============================================================================
+    SPRING AI AGENT WITH MCP INTEGRATION - BACKUP MANIFEST
+=============================================================================
+
+Date: November 8, 2025
+Location: /home/girish/springai/
+
+-----------------------------------------------------------------------------
+BACKUP FILES
+-----------------------------------------------------------------------------
+
+1. Project Archive:
+   File: springai_agent_mcp_backup_20251108_132742.tar.gz
+   Size: 40KB
+   Files: 60
+   Contents: Complete source code, documentation, configuration
+   Excludes: target/, .git/, *.log
+
+2. MCP Server:
+   File: osquery-mcp-server.py.backup
+   Size: 4.6KB
+   Type: Python 3 script
+   Purpose: Custom JSON-RPC 2.0 MCP server for osquery
+
+3. Documentation:
+   File: BACKUP_INFO.md
+   Size: 2.9KB
+   Purpose: Detailed backup information and restoration guide
+
+-----------------------------------------------------------------------------
+PROJECT STATE
+-----------------------------------------------------------------------------
+
+✅ Java Version: 21 (LTS)
+✅ Spring Boot: 3.2.11
+✅ Build: SUCCESS
+✅ Tests: 6/6 PASSING
+✅ MCP Integration: WORKING
+✅ Documentation: COMPLETE
+
+-----------------------------------------------------------------------------
+TEST RESULTS
+-----------------------------------------------------------------------------
+
+Local Skills (3/3):
+  ✅ CalculatorSkill - Arithmetic operations
+  ✅ SummarizeSkill - Text summarization
+  ✅ MockSearchSkill - Mock search results
+
+MCP Integration (3/3):
+  ✅ OsqueryMCPSkill - Hostname queries
+  ✅ OsqueryMCPSkill - System information
+  ✅ OsqueryMCPSkill - User listing
+
+-----------------------------------------------------------------------------
+ARCHITECTURE
+-----------------------------------------------------------------------------
+
+Hybrid Design:
+- Local Skills: Direct Java implementations
+- MCP Skills: External tools via JSON-RPC 2.0
+- Transport: stdio (standard input/output)
+- Protocol: Model Context Protocol (MCP)
+
+Components:
+- AgentController (REST API)
+- AgentService (Orchestration)
+- Skill Interface (Strategy pattern)
+- MCPClientService (MCP protocol client)
+- 4 Skills (3 local + 1 MCP-based)
+
+-----------------------------------------------------------------------------
+DEPENDENCIES
+-----------------------------------------------------------------------------
+
+Core:
+  - spring-boot-starter-web: 3.2.11
+  - spring-boot-starter-test: 3.2.11
+
+MCP Integration:
+  - jackson-databind: 2.15.4
+  - spring-boot-starter-webflux: 3.2.11
+  - commons-exec: 1.4.0
+
+-----------------------------------------------------------------------------
+QUICK RESTORE
+-----------------------------------------------------------------------------
+
+1. Extract:
+   tar -xzf springai_agent_mcp_backup_20251108_132742.tar.gz
+
+2. Setup MCP server:
+   cp osquery-mcp-server.py.backup ~/osquery-mcp-server.py
+   chmod +x ~/osquery-mcp-server.py
+
+3. Build:
+   cd springai_agent_getting_started
+   mvn clean package
+
+4. Run:
+   mvn spring-boot:run
+
+-----------------------------------------------------------------------------
+VERIFICATION
+-----------------------------------------------------------------------------
+
+Archive Contents: 60 files
+Backup Integrity: Verified
+MCP Server: Backed up
+Documentation: Complete
+
+Test Command:
+  curl -X POST http://localhost:8080/api/agent/execute \
+    -H "Content-Type: application/json" \
+    -d '{"goal": "show system info"}'
+
+Expected: System information via osquery MCP server
+
+=============================================================================
