@@ -10,7 +10,9 @@ public class SummarizeSkill implements Skill {
     public boolean canHandle(String goal) {
         if (goal == null) return false;
         String g = goal.toLowerCase();
-        return g.contains("summarize") || g.contains("summary") || g.contains("summarise") || g.startsWith("summarize:") || g.startsWith("summary:");
+        return g.contains("summarize") || g.contains("summary") || g.contains("summarise") 
+            || g.startsWith("summarize:") || g.startsWith("summary:") 
+            || g.contains("tldr") || g.startsWith("tldr:");
     }
 
     @Override

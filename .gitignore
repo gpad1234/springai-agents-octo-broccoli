@@ -1,3 +1,15 @@
+# =============================================================================
+# Spring AI Agent - Git Ignore Configuration
+# =============================================================================
+# 
+# Test Strategy:
+#   - Test source code (src/test/**/*.java) is TRACKED
+#   - Test scenarios/documentation (CHAT_TEST_SCENARIOS.md) is TRACKED
+#   - Test results/reports (CHAT_TEST_RESULTS.md, surefire-reports/) are IGNORED
+#   - All Maven target/ output is IGNORED
+#
+# =============================================================================
+
 # Spring Boot / Maven
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -173,7 +185,7 @@ buildNumber.properties
 # TESTING
 # =============================================================================
 
-# Test results
+# Test results and reports (Maven/JUnit output)
 test-output/
 test-results/
 *.result
@@ -182,6 +194,27 @@ coverage/
 htmlcov/
 *.cover
 
+# Maven Surefire and Failsafe reports (in target/ directory)
+**/surefire-reports/
+**/failsafe-reports/
+TEST-*.xml
+*.exec
+
+# JUnit reports
+junit-*.xml
+
+# Test result markdown files (auto-generated summaries)
+# Note: Test scenarios (CHAT_TEST_SCENARIOS.md) are kept as reference docs
+*_TEST_RESULTS.md
+*_test_results.md
+test_results_*.md
+/tmp/test_results.md
+
+# Coverage reports
+jacoco.xml
+cobertura.xml
+**/coverage-report/
+
 # =============================================================================
 # DOCUMENTATION (generated)
 # =============================================================================
@@ -189,6 +222,12 @@ htmlcov/
 # Keep manually written docs, ignore generated ones
 target/site/
 target/apidocs/
+
+# Test result documentation (auto-generated or frequently changing)
+CHAT_TEST_RESULTS.md
+*_TEST_RESULTS.md
+*_test_results.md
+test_results*.md
 
 # =============================================================================
 # OS & EDITOR SPECIFIC

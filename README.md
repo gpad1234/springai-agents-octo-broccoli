@@ -67,7 +67,9 @@ Comprehensive documentation is available:
 
 - **[Architecture Documentation V2](ARCHITECTURE_V2.md)** - Complete system design with MCP integration
 - **[MCP Integration Guide](MCP_INTEGRATION_GUIDE.md)** - Setup and usage guide for Model Context Protocol
-- **[Test Results](/tmp/test_results.md)** - Comprehensive test validation results
+- **[Interactive Chat Quick Reference](CHAT_QUICKREF.md)** - Quick start guide for chat mode
+- **[Chat Test Scenarios](CHAT_TEST_SCENARIOS.md)** - Comprehensive test scenarios documentation
+- **[Chat Test Results](CHAT_TEST_RESULTS.md)** - Test validation report (29 tests passing)
 
 ## 🚀 Quick Start
 
@@ -91,11 +93,53 @@ mvn test
 
 ### Run Application
 
+**Web Server Mode (default):**
 ```bash
 mvn spring-boot:run
 ```
 
 The application will start on `http://localhost:8080`
+
+**Interactive Chat Mode:**
+```bash
+mvn spring-boot:run -Dspring-boot.run.arguments="--chat"
+```
+
+Or using the JAR:
+```bash
+java -jar target/springai-agent-demo-0.0.1-SNAPSHOT.jar --chat
+```
+
+You can also use the short flag:
+```bash
+java -jar target/springai-agent-demo-0.0.1-SNAPSHOT.jar -c
+```
+
+Or use the convenience script:
+```bash
+./chat.sh
+```
+
+In interactive mode, you can directly type your requests:
+```
+========================================
+  Spring AI Agent - Interactive Chat
+========================================
+Available skills: Calculator, Search, Summarize, Osquery
+Type 'exit' or 'quit' to stop
+========================================
+
+You: calculate: 10 + 5
+Agent:
+  [CalculatorSkill] 15.0
+
+You: search: spring boot
+Agent:
+  [MockSearchSkill] Mock search results for 'spring boot': ...
+
+You: exit
+Goodbye!
+```
 
 ### MCP Server Setup (Optional)
 
