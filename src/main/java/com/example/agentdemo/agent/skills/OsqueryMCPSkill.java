@@ -46,28 +46,28 @@ public class OsqueryMCPSkill implements Skill {
     
     private boolean connected = false;
     
-    @PostConstruct
-    public void init() {
-        if (!enabled) {
-            log.info("OsqueryMCPSkill is disabled");
-            return;
-        }
-        
-        try {
-            log.info("Connecting to osquery MCP server...");
-            List<String> argsList = args != null ? List.of(args.split("\\s+")) : List.of();
-            mcpClient.connectServer(SERVER_NAME, command, argsList);
-            connected = true;
-            
-            // List available tools
-            var tools = mcpClient.listTools(SERVER_NAME);
-            log.info("Available osquery tools: {}", 
-                tools.stream().map(t -> t.getName()).collect(Collectors.joining(", ")));
-        } catch (Exception e) {
-            log.error("Failed to connect to osquery MCP server", e);
-            connected = false;
-        }
-    }
+    // @PostConstruct
+    // public void init() {
+    //     if (!enabled) {
+    //         log.info("OsqueryMCPSkill is disabled");
+    //         return;
+    //     }
+    //     
+    //     try {
+    //         log.info("Connecting to osquery MCP server...");
+    //         List<String> argsList = args != null ? List.of(args.split("\\s+")) : List.of();
+    //         mcpClient.connectServer(SERVER_NAME, command, argsList);
+    //         connected = true;
+    //         
+    //         // List available tools
+    //         var tools = mcpClient.listTools(SERVER_NAME);
+    //         log.info("Available osquery tools: {}", 
+    //             tools.stream().map(t -> t.getName()).collect(Collectors.joining(", ")));
+    //     } catch (Exception e) {
+    //         log.error("Failed to connect to osquery MCP server", e);
+    //         connected = false;
+    //     }
+    // }
     
     @PreDestroy
     public void cleanup() {

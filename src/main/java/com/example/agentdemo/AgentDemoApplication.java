@@ -17,24 +17,24 @@ public class AgentDemoApplication {
         SpringApplication.run(AgentDemoApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner interactiveChatRunner(ApplicationContext context) {
-        return args -> {
-            // Check if --chat flag is present
-            boolean chatMode = false;
-            for (String arg : args) {
-                if ("--chat".equals(arg) || "-c".equals(arg)) {
-                    chatMode = true;
-                    break;
-                }
-            }
+    // @Bean
+    // public CommandLineRunner interactiveChatRunner(ApplicationContext context) {
+    //     return args -> {
+    //         // Check if --chat flag is present
+    //         boolean chatMode = false;
+    //         for (String arg : args) {
+    //             if ("--chat".equals(arg) || "-c".equals(arg)) {
+    //                 chatMode = true;
+    //                 break;
+    //             }
+    //         }
 
-            if (chatMode) {
-                AgentService agentService = context.getBean(AgentService.class);
-                runInteractiveChat(agentService);
-            }
-        };
-    }
+    //         if (chatMode) {
+    //             AgentService agentService = context.getBean(AgentService.class);
+    //             runInteractiveChat(agentService);
+    //         }
+    //     };
+    // }
 
     private void runInteractiveChat(AgentService agentService) {
         Scanner scanner = new Scanner(System.in);
