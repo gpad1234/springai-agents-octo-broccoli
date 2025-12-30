@@ -1,0 +1,7 @@
+/* Minimal styles to mirror existing look */
+body{
+  margin:0;
+  background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+  min-height:100vh;
+}
+#root > div{background:white;border-radius:12px;padding:20px;margin:40px auto;max-width:900px}
