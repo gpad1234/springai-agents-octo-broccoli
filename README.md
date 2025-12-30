@@ -5,6 +5,9 @@ A modular, skill-based intelligent agent system built with Spring Boot 3.2.11 an
 ## 📋 Features
 
 - **RESTful API**: POST endpoint at `/api/agent/execute` with JSON payloads
+- **Skill Discovery**: GET endpoint at `/api/agent/skills` lists all registered skills
+- **Automatic Registration**: New skills are auto-discovered at startup via `@Component` annotation
+- **Startup Logging**: Skills are displayed in the console when the application starts
 - **Hybrid Skill System**: Combines local and MCP-based skills
 - **Built-in Local Skills**:
   - 🧮 **CalculatorSkill**: Arithmetic operations (+, -, *, /)
@@ -173,8 +176,8 @@ public class WeatherSkill implements Skill {
 ## �📚 Documentation
 
 Comprehensive documentation is available:
-
-- **[Architecture Documentation V2](ARCHITECTURE_V2.md)** - Complete system design with MCP integration
+- **[Skills Usage Guide](SKILLS_USAGE_GUIDE.md)** - Complete guide to querying and using all skills
+- **[Skills Quick Reference](SKILLS_QUICKREF.txt)** - One-page cheat sheet for all skills- **[Architecture Documentation V2](ARCHITECTURE_V2.md)** - Complete system design with MCP integration
 - **[MCP Integration Guide](MCP_INTEGRATION_GUIDE.md)** - Setup and usage guide for Model Context Protocol
 - **[Interactive Chat Quick Reference](CHAT_QUICKREF.md)** - Quick start guide for chat mode
 - **[Chat Test Scenarios](CHAT_TEST_SCENARIOS.md)** - Comprehensive test scenarios documentation
@@ -266,6 +269,31 @@ mcp.osquery.args=
 See [MCP_INTEGRATION_GUIDE.md](MCP_INTEGRATION_GUIDE.md) for detailed setup instructions.
 
 ## 📡 API Usage
+
+### List Available Skills
+
+**Endpoint:** `GET /api/agent/skills`
+
+**Request:**
+```bash
+curl http://localhost:8080/api/agent/skills
+```
+
+**Response:**
+```json
+{
+  "count": 5,
+  "skills": [
+    "CalculatorSkill",
+    "MockSearchSkill",
+    "OsqueryMCPSkill",
+    "SummarizeSkill",
+    "WeatherSkill"
+  ]
+}
+```
+
+This endpoint automatically displays all registered skills. When you add a new skill, it will appear here immediately after restart.
 
 ### Execute Agent Goal
 

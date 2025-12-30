@@ -17,6 +17,15 @@ public class AgentController {
         this.agentService = agentService;
     }
 
+    @GetMapping("/skills")
+    public ResponseEntity<Map<String, Object>> getSkills() {
+        List<String> skills = agentService.getAvailableSkills();
+        return ResponseEntity.ok(Map.of(
+                "count", skills.size(),
+                "skills", skills
+        ));
+    }
+
     @PostMapping("/execute")
     public ResponseEntity<Map<String, Object>> execute(@RequestBody Map<String, String> body) {
         String goal = body.getOrDefault("goal", "");
