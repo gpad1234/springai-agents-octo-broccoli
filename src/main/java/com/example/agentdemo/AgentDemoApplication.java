@@ -55,7 +55,6 @@ public class AgentDemoApplication {
 
             if ("exit".equalsIgnoreCase(input) || "quit".equalsIgnoreCase(input)) {
                 System.out.println("\nGoodbye!");
-                System.exit(0);
                 break;
             }
 

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring AI Agent Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .input-section {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background: #e0e0e0;
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .examples {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .examples h3 {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .example-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 5px 5px 5px 0;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        
+        .example-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+        
+        .results {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .results h2 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .result-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .result-item.error {
+            border-left-color: #e74c3c;
+        }
+        
+        .result-item.success {
+            border-left-color: #2ecc71;
+        }
+        
+        .skill-name {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .output {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Spring AI Agent Demo</h1>
+            <p>Test the AI agent with various skills: Calculator, Search, Summarize, and Osquery</p>
+        </div>
+        
+        <div class="content">
+            <div class="input-section">
+                <label for="goalInput">Enter your goal:</label>
+                <textarea id="goalInput" placeholder="e.g., calculate 15 * 23, or search for AI news, or summarize this text..."></textarea>
+            </div>
+            
+            <div class="examples">
+                <h3>Quick Examples:</h3>
+                <span class="example-btn" onclick="setGoal('calculate 15 * 23')">📊 Calculate 15 * 23</span>
+                <span class="example-btn" onclick="setGoal('search for latest AI news')">🔍 Search AI news</span>
+                <span class="example-btn" onclick="setGoal('summarize: Spring Boot is a framework for building Java applications')">📝 Summarize text</span>
+                <span class="example-btn" onclick="setGoal('query system information using osquery')">💻 Query system info</span>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-primary" onclick="executeGoal()" id="executeBtn">
+                    Execute Goal
+                </button>
+                <button class="btn-secondary" onclick="clearResults()">
+                    Clear Results
+                </button>
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Processing your request...</p>
+            </div>
+            
+            <div class="results" id="results" style="display: none;">
+                <h2>Results:</h2>
+                <div id="resultsContent"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function setGoal(text) {
+            document.getElementById('goalInput').value = text;
+        }
+        
+        function clearResults() {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('resultsContent').innerHTML = '';
+            document.getElementById('goalInput').value = '';
+        }
+        
+        async function executeGoal() {
+            const goal = document.getElementById('goalInput').value.trim();
+            
+            if (!goal) {
+                alert('Please enter a goal');
+                return;
+            }
+            
+            const executeBtn = document.getElementById('executeBtn');
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            const resultsContent = document.getElementById('resultsContent');
+            
+            // Show loading
+            executeBtn.disabled = true;
+            loading.classList.add('active');
+            results.style.display = 'none';
+            resultsContent.innerHTML = '';
+            
+            try {
+                const response = await fetch('/api/agent/execute', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ goal: goal })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Display results
+                let html = '';
+                
+                if (data.trace && data.trace.length > 0) {
+                    data.trace.forEach(item => {
+                        const className = item.success ? 'success' : 'error';
+                        html += `
+                            <div class="result-item ${className}">
+                                <div class="skill-name">${item.success ? '✓' : '✗'} ${item.skillName}</div>
+                                <div class="output">${escapeHtml(item.output)}</div>
+                            </div>
+                        `;
+                    });
+                }
+                
+                if (data.finalOutput) {
+                    html += `
+                        <div class="result-item success">
+                            <div class="skill-name">📋 Final Output</div>
+                            <div class="output"><strong>${escapeHtml(data.finalOutput)}</strong></div>
+                        </div>
+                    `;
+                }
+                
+                resultsContent.innerHTML = html;
+                results.style.display = 'block';
+                
+            } catch (error) {
+                resultsContent.innerHTML = `
+                    <div class="error-message">
+                        <strong>Error:</strong> ${escapeHtml(error.message)}
+                    </div>
+                `;
+                results.style.display = 'block';
+            } finally {
+                executeBtn.disabled = false;
+                loading.classList.remove('active');
+            }
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Allow Enter key to submit (with Shift+Enter for new line)
+        document.getElementById('goalInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                executeGoal();
+            }
+        });
+    </script>
+</body>
+</html>

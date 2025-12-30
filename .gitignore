@@ -298,3 +298,80 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# =============================================================================
+# LARGE FILES & BUILD ARTIFACTS
+# =============================================================================
+
+# Large binary files (typically over 50MB)
+*.dmg
+*.iso
+*.img
+*.vdi
+*.vmdk
+
+# Large archive files
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+
+# Large media files
+*.mp4
+*.avi
+*.mkv
+*.mov
+*.flv
+*.wmv
+*.mpg
+*.mpeg
+
+# Large audio files
+*.wav
+*.flac
+*.aiff
+
+# Large image files
+*.psd
+*.xcf
+*.tif
+*.tiff
+
+# Database dumps and large data files
+*.dump
+*.sql.gz
+*.bson
+
+# Maven/Gradle caches (can be regenerated)
+.m2/repository/
+.gradle/caches/
+
+# Large dependency files (will be re-downloaded)
+**/lib/*.jar
+!mvnw.jar
+
+# Generated documentation (can be regenerated)
+**/target/site/
+**/target/javadoc/
+
+# Test data files
+**/test-data/*.csv
+**/test-data/*.json
+**/test-data/*.xml
+# Only if they're large - keep small test fixtures
+
+# Heap dumps
+*.hprof
+hs_err_pid*.log
+
+# Thread dumps
+*.tdump
+*.stack
+
+# Core dumps
+core.*
+
+# Generated class files in non-standard locations
+*.class

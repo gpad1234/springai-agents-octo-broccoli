@@ -61,7 +61,116 @@ This application follows a **hybrid architecture** combining local skills with M
 | Testing | JUnit 5 | (bundled) |
 | Server | Embedded Tomcat | (bundled) |
 
-## 📚 Documentation
+## �️ Adding New Skills
+
+This application uses a simple, extensible pattern for adding new skills. Skills are automatically registered via Spring's component scanning.
+
+### Step-by-Step Guide
+
+#### 1. Create a New Skill Class
+
+Create a new Java class in `src/main/java/com/example/agentdemo/agent/skills/`:
+
+```java
+package com.example.agentdemo.agent.skills;
+
+import com.example.agentdemo.agent.Skill;
+import com.example.agentdemo.model.ActionResult;
+import org.springframework.stereotype.Component;
+
+@Component  // This annotation auto-registers the skill
+public class YourSkillName implements Skill {
+    
+    @Override
+    public boolean canHandle(String goal) {
+        // Define when this skill should be activated
+        String g = goal.toLowerCase();
+        return g.contains("your-trigger-word") || 
+               g.contains("another-trigger");
+    }
+    
+    @Override
+    public ActionResult execute(String goal) {
+        // Implement your skill logic
+        try {
+            String result = performTask(goal);
+            return new ActionResult(true, "YourSkillName", result);
+        } catch (Exception e) {
+            return new ActionResult(false, "YourSkillName", 
+                "Error: " + e.getMessage());
+        }
+    }
+    
+    private String performTask(String goal) {
+        // Your implementation here
+        return "Task completed!";
+    }
+}
+```
+
+#### 2. That's It! 🎉
+
+The skill is automatically registered and available. No configuration needed.
+
+### Real Example: WeatherSkill
+
+Here's a complete working example:
+
+```java
+@Component
+public class WeatherSkill implements Skill {
+    
+    @Override
+    public boolean canHandle(String goal) {
+        String g = goal.toLowerCase();
+        return g.contains("weather") || 
+               g.contains("temperature") || 
+               g.contains("forecast");
+    }
+    
+    @Override
+    public ActionResult execute(String goal) {
+        String city = extractCity(goal);
+        String weather = generateWeather(city);
+        return new ActionResult(true, "WeatherSkill", weather);
+    }
+}
+```
+
+**Usage Examples:**
+- `weather in Seattle`
+- `what's the temperature in Tokyo`
+- `forecast for Paris`
+
+### Skill Pattern Best Practices
+
+✅ **DO:**
+- Use descriptive class names ending in "Skill"
+- Annotate with `@Component` for auto-registration
+- Include clear trigger words in `canHandle()`
+- Return success/failure in `ActionResult`
+- Handle exceptions gracefully
+- Extract input parsing into helper methods
+- Add JavaDoc comments
+
+❌ **DON'T:**
+- Hardcode configuration values (use `@Value` for properties)
+- Throw uncaught exceptions
+- Overlap trigger words with other skills
+- Make blocking calls without timeout
+- Return null from `execute()`
+
+### Available Skills (Reference)
+
+| Skill | Triggers | Examples |
+|-------|----------|----------|
+| **CalculatorSkill** | calculate, compute, sum | `calculate 15 * 23` |
+| **MockSearchSkill** | search, find, lookup | `search for AI news` |
+| **SummarizeSkill** | summarize, summary, tldr | `summarize: [text]` |
+| **OsqueryMCPSkill** | osquery, system query | `osquery: list processes` |
+| **WeatherSkill** | weather, temperature, forecast | `weather in Seattle` |
+
+## �📚 Documentation
 
 Comprehensive documentation is available:
 
