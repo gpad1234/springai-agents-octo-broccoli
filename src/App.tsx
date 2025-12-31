@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 interface Skill {
@@ -70,136 +68,146 @@ function App() {
   }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Spring AI Agent Interface</h1>
-      
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-
-      <div className="card">
-        <button onClick={fetchMessage} disabled={loading}>
-          {loading ? 'Loading...' : 'Test Server Connection'}
-        </button>
-        {message && <p>Server says: {message}</p>}
-      </div>
-
-      {/* Hamburger Menu Button */}
-      <button 
-        className="hamburger-btn"
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-        aria-label="Toggle skills menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      {/* Sliding Skills Menu */}
-      <div className={`skills-menu ${isMenuOpen ? 'open' : ''}`} role="complementary" aria-label="AI Skills Menu">
-        <div className="menu-header">
-          <h2>AI Skills ({skills.length})</h2>
+    <div className="app-layout">
+      <header className="app-header">
+        <div className="header-brand">
+          <div className="brand-copy">
+            <div className="brand-mark">AI</div>
+            <div>
+              <h1>Spring AI Agent</h1>
+              <p>Interface</p>
+            </div>
+          </div>
+        </div>
+        <div className="header-actions">
           <button 
-            className="close-btn"
-            onClick={() => setIsMenuOpen(false)}
+            className="menu-toggle"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle skills menu"
           >
-            ×
+            ☰
           </button>
         </div>
+      </header>
+      
+      <div className="app-content">
+        <div className={`sidebar-overlay ${isMenuOpen ? 'open' : ''}`} onClick={() => setIsMenuOpen(false)}></div>
         
-        <div className="skills-list">
-          {skills.map((skill) => (
-            <div 
-              key={skill.name}
-              className={`skill-item ${selectedSkill === skill.name ? 'selected' : ''}`}
-              onClick={() => setSelectedSkill(skill.name)}
-            >
-              <h3>{skill.name.replace('Skill', '')}</h3>
-              <p>AI-powered {skill.name.toLowerCase().replace('skill', '')} functionality</p>
+        <div className="main-view">
+          <div style={{ padding: '20px' }}>
+            <div className="card">
+              <div className="card-header">
+                <h2>Counter Demo</h2>
+              </div>
+              <div className="card-content">
+                <button className="btn btn-primary" onClick={() => setCount((count) => count + 1)}>
+                  Count is {count}
+                </button>
+                <p style={{ marginTop: '10px', color: 'var(--text-secondary)' }}>
+                  Edit <code>src/App.tsx</code> and save to test HMR
+                </p>
+              </div>
             </div>
-          ))}
+
+            <div className="card">
+              <div className="card-header">
+                <h2>Server Connection Test</h2>
+              </div>
+              <div className="card-content">
+                <button className="btn btn-secondary" onClick={fetchMessage} disabled={loading}>
+                  {loading ? <span className="loading">Loading...</span> : 'Test Server Connection'}
+                </button>
+                {message && <p style={{ marginTop: '10px' }}>Server says: {message}</p>}
+              </div>
+            </div>
+          </div>
         </div>
 
-        {selectedSkill && (
-          <div className="skill-executor">
-            <h3>Execute: {selectedSkill.replace('Skill', '')}</h3>
-            <div className="skill-instructions">
-              <p><strong>Example requests:</strong></p>
-              {selectedSkill === 'CalculatorSkill' && (
-                <ul>
-                  <li>"Calculate 5 * 3"</li>
-                  <li>"Calculate 10 + 5"</li>
-                  <li>"Calculate (2 + 3) * 4"</li>
-                </ul>
-              )}
-              {selectedSkill === 'WeatherSkill' && (
-                <ul>
-                  <li>"What's the weather in New York?"</li>
-                  <li>"Get weather for London"</li>
-                </ul>
-              )}
-              {selectedSkill === 'SummarizeSkill' && (
-                <ul>
-                  <li>"Summarize this article: [paste text]"</li>
-                  <li>"Give me a summary of: [content]"</li>
-                </ul>
-              )}
-              {selectedSkill === 'MockSearchSkill' && (
-                <ul>
-                  <li>"Search for information about AI"</li>
-                  <li>"Find articles about machine learning"</li>
-                </ul>
-              )}
-              {selectedSkill === 'OsqueryMCPSkill' && (
-                <ul>
-                  <li>"Run system query"</li>
-                  <li>"Check system information"</li>
-                </ul>
+        <div className={`sidebar ${isMenuOpen ? 'open' : ''}`} role="complementary" aria-label="AI Skills Menu">
+          <div className="menu-header">
+            <h2>AI Skills ({skills.length})</h2>
+            <button 
+              className="close-btn"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              ×
+            </button>
+          </div>
+          
+          <div className="skills-list">
+            {skills.map((skill) => (
+              <div 
+                key={skill.name}
+                className={`skill-item ${selectedSkill === skill.name ? 'selected' : ''}`}
+                onClick={() => setSelectedSkill(skill.name)}
+              >
+                <h3>{skill.name.replace('Skill', '')}</h3>
+                <p>AI-powered {skill.name.toLowerCase().replace('skill', '')} functionality</p>
+              </div>
+            ))}
+          </div>
+
+          {selectedSkill && (
+            <div className="skill-executor">
+              <h3>Execute: {selectedSkill.replace('Skill', '')}</h3>
+              <div className="skill-instructions">
+                <p><strong>Example requests:</strong></p>
+                {selectedSkill === 'CalculatorSkill' && (
+                  <ul>
+                    <li>"Calculate 5 * 3"</li>
+                    <li>"Calculate 10 + 5"</li>
+                    <li>"Calculate (2 + 3) * 4"</li>
+                  </ul>
+                )}
+                {selectedSkill === 'WeatherSkill' && (
+                  <ul>
+                    <li>"What's the weather in New York?"</li>
+                    <li>"Get weather for London"</li>
+                  </ul>
+                )}
+                {selectedSkill === 'SummarizeSkill' && (
+                  <ul>
+                    <li>"Summarize this article: [paste text]"</li>
+                    <li>"Give me a summary of: [content]"</li>
+                  </ul>
+                )}
+                {selectedSkill === 'MockSearchSkill' && (
+                  <ul>
+                    <li>"Search for information about AI"</li>
+                    <li>"Find articles about machine learning"</li>
+                  </ul>
+                )}
+                {selectedSkill === 'OsqueryMCPSkill' && (
+                  <ul>
+                    <li>"Run system query"</li>
+                    <li>"Check system information"</li>
+                  </ul>
+                )}
+              </div>
+              <textarea
+                placeholder={`Enter your request for ${selectedSkill.replace('Skill', '')}...`}
+                value={skillInput}
+                onChange={(e) => setSkillInput(e.target.value)}
+                rows={3}
+              />
+              <button 
+                onClick={executeSkill} 
+                disabled={loading || !skillInput.trim()}
+                className="execute-btn"
+              >
+                {loading ? 'Executing...' : 'Execute Skill'}
+              </button>
+              {skillResult && (
+                <div className="skill-result">
+                  <h4>Result:</h4>
+                  <p>{skillResult}</p>
+                </div>
               )}
             </div>
-            <textarea
-              placeholder={`Enter your request for ${selectedSkill.replace('Skill', '')}...`}
-              value={skillInput}
-              onChange={(e) => setSkillInput(e.target.value)}
-              rows={3}
-            />
-            <button 
-              onClick={executeSkill} 
-              disabled={loading || !skillInput.trim()}
-              className="execute-btn"
-            >
-              {loading ? 'Executing...' : 'Execute Skill'}
-            </button>
-            {skillResult && (
-              <div className="skill-result">
-                <h4>Result:</h4>
-                <p>{skillResult}</p>
-              </div>
-            )}
-          </div>
-        )}
+          )}
+        </div>
       </div>
-
-      {/* Menu Overlay */}
-      {isMenuOpen && <div className="menu-overlay" onClick={() => setIsMenuOpen(false)}></div>}
-
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
