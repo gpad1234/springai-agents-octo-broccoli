@@ -39,4 +39,9 @@ public class AgentController {
                 "finalOutput", finalOutput
         ));
     }
+
+    @GetMapping("/message")
+    public ResponseEntity<Map<String, String>> getMessage() {
+        return ResponseEntity.ok(Map.of("message", "Hello from Spring AI Agent Server!"));
+    }
 }
